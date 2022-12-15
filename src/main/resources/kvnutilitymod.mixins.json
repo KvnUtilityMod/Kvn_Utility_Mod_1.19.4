@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.kvn.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "ExampleMixin",
+    "MouseMixin",
+    "KeyBoardMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
