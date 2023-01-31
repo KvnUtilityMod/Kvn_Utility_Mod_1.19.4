@@ -81,6 +81,11 @@ public class MainGui extends Screen implements CharInput, KeyPress, MouseClick, 
         if (settingsGui != null) settingsGui.onMouseScroll(y);
     }
 
+    @Override
+    public boolean shouldPause() {
+        return false;
+    }
+
     public void setSettingGui(SettingsGui settingGui) {
         this.settingsGui = settingGui;
     }

@@ -3,7 +3,8 @@ package net.kvn.modules;
 public enum Category {
     BUILD("Build"),
     CLIENT("Client"),
-    QUICKWORLDEDIT("QuickWorldEdit");
+    QUICKWORLDEDIT("QuickWorldEdit"),
+    SHAPES("Shapes");
 
     private String name;
 

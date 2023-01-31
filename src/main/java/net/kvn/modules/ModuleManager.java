@@ -4,6 +4,7 @@ import net.kvn.modules.QuickWorldEdit.*;
 import net.kvn.modules.build.Ruler;
 import net.kvn.modules.client.ClickGui;
 import net.kvn.modules.client.TestModule;
+import net.kvn.modules.shapes.*;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,16 @@ public class ModuleManager {
     public Copy copy = addModule(new Copy());
     public Rotate rotate = addModule(new Rotate());
     public Paste paste = addModule(new Paste());
+    public Flip flip = addModule(new Flip());
+    public Stack stack = addModule(new Stack());
+    public Mirror mirror = addModule(new Mirror());
+
+    //Shapes
+    public Circle circle = addModule(new Circle());
+    public Line line = addModule(new Line());
+    public Arch arch = addModule(new Arch());
+    public Undo undo = addModule(new Undo());
+    public Redo redo = addModule(new Redo());
 
     public ModuleManager() {}
 

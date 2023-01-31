@@ -7,6 +7,7 @@ import net.kvn.utils.file.FileWriter;
 import java.util.ArrayList;
 
 import static net.kvn.KvnUtilityMod.booleanSettings;
+import static net.kvn.KvnUtilityMod.customEventHandler;
 import static net.kvn.utils.input.TextUtil.getIndex;
 
 public class BooleanValue extends Setting {
@@ -26,7 +27,7 @@ public class BooleanValue extends Setting {
         this.value = value;
     }
 
-    public boolean getValue() {
+    public boolean isTrue() {
         return value;
     }
 
@@ -37,10 +38,11 @@ public class BooleanValue extends Setting {
     public void updateValue(boolean value) {
         this.setValue(value);
         this.setValueFile(value);
+        customEventHandler.onSettingUpdate(this);
     }
 
     public void toggleValue() {
-        this.updateValue(!this.getValue());
+        this.updateValue(!this.isTrue());
     }
 
     //load boolean from file
@@ -48,7 +50,7 @@ public class BooleanValue extends Setting {
         //get the index of the string
         int index = getIndex(this.saveString, enabledBooleans);
         if (index == -1) {
-            enabledBooleans.add(this.saveString + " = " + this.getValue());
+            enabledBooleans.add(this.saveString + " = " + this.isTrue());
         } else {
             this.value = enabledBooleans.get(index).contains("true");
         }

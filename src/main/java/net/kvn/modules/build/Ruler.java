@@ -8,7 +8,7 @@ import net.kvn.settings.BlockPosValue;
 import net.kvn.settings.ColorValue;
 import net.kvn.settings.IntegerValue;
 import net.kvn.utils.render.BoxUtil;
-import net.kvn.utils.render.RenderBox;
+import net.kvn.utils.render.RenderBoxUtil;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
@@ -31,14 +31,14 @@ public class Ruler extends Module implements net.kvn.event.events.RenderBox, Pre
     @Override
     public void renderBox(WorldRenderContext context, MatrixStack matrices) {
         if (!this.isActive()) return;
-        RenderBox.draw3d(matrices, BoxUtil.createBox(blockPos1.getPos()), color.getColorObj());
-        RenderBox.draw3d(matrices, BoxUtil.createBox(blockPos2.getPos()), color.getColorObj());
+        RenderBoxUtil.draw3d(matrices, BoxUtil.createBox(blockPos1.getPos()), color.getColorObj());
+        RenderBoxUtil.draw3d(matrices, BoxUtil.createBox(blockPos2.getPos()), color.getColorObj());
 
         for (int i = 0; i < blocksBetween.getValue(); i++) {
             double x = (blockPos1.getX() + (blockPos2.getX() - blockPos1.getX()) * ((i + 1)  / (double) (blocksBetween.getValue() + 1)));
             double y = (blockPos1.getY() + (blockPos2.getY() - blockPos1.getY()) * ((i + 1)  / (double) (blocksBetween.getValue() + 1)));
             double z = (blockPos1.getZ() + (blockPos2.getZ() - blockPos1.getZ()) * ((i + 1)  / (double) (blocksBetween.getValue() + 1)));
-            RenderBox.draw3d(matrices, BoxUtil.createBox(x, y, z, x + 1, y + 1, z + 1), color.getColorObj());
+            RenderBoxUtil.draw3d(matrices, BoxUtil.createBox(x, y, z, x + 1, y + 1, z + 1), color.getColorObj());
         }
     }
 

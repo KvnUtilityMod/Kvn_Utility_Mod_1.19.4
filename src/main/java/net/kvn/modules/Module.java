@@ -1,6 +1,7 @@
 package net.kvn.modules;
 
 import net.kvn.settings.KeyValue;
+import net.kvn.settings.ModeValue;
 import net.kvn.settings.Setting;
 import net.kvn.settings.Visible;
 import net.kvn.utils.file.FileReader;
@@ -103,6 +104,13 @@ public abstract class Module {
         ArrayList<Setting> settingsOf = new ArrayList<>();
         settings.forEach(setting -> {
             if (setting.getSettingOf() == settingOf) settingsOf.add(setting);
+        });
+        return settingsOf;
+    }
+    public ArrayList<Setting> getSettingsOf(ModeValue modeValue){
+        ArrayList<Setting> settingsOf = new ArrayList<>();
+        settings.forEach(setting -> {
+            if (setting.getSettingOf() == modeValue && setting.getModeIndex() == modeValue.getMode()) settingsOf.add(setting);
         });
         return settingsOf;
     }

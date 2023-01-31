@@ -2,6 +2,7 @@ package net.kvn.gui.MainGui.settingbuttones;
 
 import net.kvn.modules.Module;
 import net.kvn.settings.ColorValue;
+import net.kvn.utils.render.ColorUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -14,14 +15,14 @@ import static net.kvn.utils.render.GuiUtil.getLevelOfSetting;
 public class ColorValueGui extends SettingGui {
 
     private ColorValue setting;
-    private int buttonheight = 0;
+    private int buttonHeight = 0;
     private int buttonListening = -1;
     private String input = "";
 
     public ColorValueGui(Module module, ColorValue colorValue, int x, int y, int width, int height) {
         super(module, colorValue, x, y, width, height);
         this.setting = colorValue;
-        this.buttonheight = height;
+        this.buttonHeight = height;
     }
 
     @Override
@@ -31,14 +32,13 @@ public class ColorValueGui extends SettingGui {
         int textColor = moduleManager.clickGui.textSetting.getColor();
         String str = setting.getName() + ": " + setting.getStrMode();
         mc.textRenderer.draw(matrices, str, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str)) / 2F, super.getY() + (super.getHeight() - 9) / 2F, textColor);
-        DrawableHelper.fill(matrices, (int) (super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str)) / 2F), super.getY() + buttonheight - 4, (int) (super.getX() + (super.getWidth() + mc.textRenderer.getWidth(str)) / 2F), super.getY() + buttonheight - 1, new Color(255, 255, 255, 255).getRGB());
-        DrawableHelper.fill(matrices, (int) (super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str)) / 2F), super.getY() + buttonheight - 4, (int) (super.getX() + (super.getWidth() + mc.textRenderer.getWidth(str)) / 2F), super.getY() + buttonheight - 1, setting.getColor());
+        DrawableHelper.fill(matrices, (int) (super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str)) / 2F), super.getY() + buttonHeight - 4, (int) (super.getX() + (super.getWidth() + mc.textRenderer.getWidth(str)) / 2F), super.getY() + buttonHeight - 1, new Color(255, 255, 255, 255).getRGB());
+        DrawableHelper.fill(matrices, (int) (super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str)) / 2F), super.getY() + buttonHeight - 4, (int) (super.getX() + (super.getWidth() + mc.textRenderer.getWidth(str)) / 2F), super.getY() + buttonHeight - 1, setting.getColor());
 
         if (setting.isSettingsOpened()){
             int levels = getLevelOfSetting(setting) + 1;
-            Color c = moduleManager.clickGui.textSetting.getColorObj();
-            DrawableHelper.fill(matrices, super.getX(), super.getY() + buttonheight, super.getX() + super.getWidth(), super.getY() + getHeight(), moduleManager.clickGui.backgroundSettings.getColor());
-            DrawableHelper.fill(matrices, x + (levels * 3), y + buttonheight, x + (levels * 3) + 1, y + getHeight(), new Color(Math.max(c.getGreen() - 50, 0), Math.max(c.getBlue() - 50, 0), Math.min(c.getAlpha() + 50, 255)).getRGB());
+            DrawableHelper.fill(matrices, x + (levels * 3), y + buttonHeight, x + (levels * 3) + 1, y + getHeight(), new Color(255, 255, 255, 255).getRGB());
+            DrawableHelper.fill(matrices, x + (levels * 3), y + buttonHeight, x + (levels * 3) + 1, y + getHeight(), setting.getColor());
 
             String str1 = "";
             String str2 = "";
@@ -62,10 +62,10 @@ public class ColorValueGui extends SettingGui {
                     str3 = buttonListening == 2 ? "Brightness: [ " + input + " ]" : "Brightness: " + setting.getHueBrightness();
                     break;
             }
-            mc.textRenderer.draw(matrices, str1, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str1)) / 2F, super.getY() + buttonheight + (super.getHeight() - 9) / 2F, textColor);
-            mc.textRenderer.draw(matrices, str2, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str2)) / 2F, super.getY() + buttonheight * 2+ (super.getHeight() - 9) / 2F, textColor);
-            mc.textRenderer.draw(matrices, str3, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str3)) / 2F, super.getY() + buttonheight * 3+ (super.getHeight() - 9) / 2F, textColor);
-            mc.textRenderer.draw(matrices, str4, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str4)) / 2F, super.getY() + buttonheight * 4 + (super.getHeight() - 9) / 2F, textColor);
+            mc.textRenderer.draw(matrices, str1, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str1)) / 2F, super.getY() + buttonHeight + (super.getHeight() - 9) / 2F, textColor);
+            mc.textRenderer.draw(matrices, str2, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str2)) / 2F, super.getY() + buttonHeight * 2+ (super.getHeight() - 9) / 2F, textColor);
+            mc.textRenderer.draw(matrices, str3, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str3)) / 2F, super.getY() + buttonHeight * 3+ (super.getHeight() - 9) / 2F, textColor);
+            mc.textRenderer.draw(matrices, str4, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str4)) / 2F, super.getY() + buttonHeight * 4 + (super.getHeight() - 9) / 2F, textColor);
         }
     }
 
@@ -76,9 +76,9 @@ public class ColorValueGui extends SettingGui {
 
         if (setting.isSettingsOpened()){
 
-            if (x > super.getX() && x < super.getX() + super.getWidth() && y > super.getY() + buttonheight && y < super.getY() + getHeight() && button != 1) {
+            if (x > super.getX() && x < super.getX() + super.getWidth() && y > super.getY() + buttonHeight && y < super.getY() + getHeight() && button != 1) {
 
-                int buttonIndex = (y - (super.getY() + buttonheight)) / buttonheight;
+                int buttonIndex = (y - (super.getY() + buttonHeight)) / buttonHeight;
                 if (buttonIndex == buttonListening) {
                     try {
                         int value = Integer.parseInt(input);
@@ -128,7 +128,7 @@ public class ColorValueGui extends SettingGui {
 
     @Override
     public int getHeight() {
-        return setting.isSettingsOpened() ? buttonheight * 5 : buttonheight;
+        return setting.isSettingsOpened() ? buttonHeight * 5 : buttonHeight;
     }
 
     @Override

@@ -42,7 +42,7 @@ public class CategoryGui {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 
         //render category
-        DrawableHelper.fill(matrices, x, y, x + width, y + categoryHeight, moduleManager.clickGui.backgroundGui.getDarkerColor(10).getRGB());
+        DrawableHelper.fill(matrices, x, y, x + width, y + categoryHeight, moduleManager.clickGui.backgroundGui.getColorObj().darker().getRGB());
         mc.textRenderer.draw(matrices, category.getName().toUpperCase(), x + (width - mc.textRenderer.getWidth(category.getName().toUpperCase())) / 2F, y + (categoryHeight - 9) / 2F, moduleManager.clickGui.textGui.getColor());
         yVar += categoryHeight;
 

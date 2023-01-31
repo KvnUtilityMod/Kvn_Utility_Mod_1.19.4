@@ -1,6 +1,7 @@
 package net.kvn.utils.render;
 
 
+import net.kvn.utils.math.DoublePos;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
@@ -8,6 +9,18 @@ public class BoxUtil {
 
     public static Box createBox(BlockPos pos) {
         return new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1);
+    }
+
+    public static Box createBox(double x, double y, double z) {
+        return new Box(x, y, z, x + 1, y + 1, z + 1);
+    }
+
+    public static Box createBox(DoublePos pos) {
+        return new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1);
+    }
+
+    public static Box createBox(double[] pos) {
+        return new Box(pos[0], pos[1], pos[2], pos[0] + 1, pos[1] + 1, pos[2] + 1);
     }
 
     public static Box createBox(BlockPos pos1, BlockPos pos2) {

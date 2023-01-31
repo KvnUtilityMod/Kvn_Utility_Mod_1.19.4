@@ -79,7 +79,7 @@ public class ColorValue extends Setting {
         int blue = c.getBlue() - (c.getBlue() * multiplier / 100);
         int alpha = c.getAlpha() + ((255 - c.getAlpha()) * multiplier / 100);
 
-        return getColorObj().darker();
+        return new Color(red, green, blue, alpha);
     }
 
     //next mode
@@ -110,8 +110,6 @@ public class ColorValue extends Setting {
         } else {
             try {
                 String[] color = colorSettings.get(index).split(" = ")[1].replace("[", "").replace("]", "").split(", ");
-                //use setters to make sure the values are in range
-                for (String s : color) System.out.println(s);
                 setMode(Integer.parseInt(color[0]));
                 setAlpha(Integer.parseInt(color[1]));
                 setRainBowSpeed(Integer.parseInt(color[2]));

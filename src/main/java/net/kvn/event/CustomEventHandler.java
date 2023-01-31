@@ -2,6 +2,7 @@ package net.kvn.event;
 
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.kvn.event.events.*;
+import net.kvn.settings.BooleanValue;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
@@ -75,6 +76,14 @@ public class CustomEventHandler {
         for (Object listener : listeners) {
             if (listener instanceof HudRender) {
                 ((HudRender) listener).onHudRender(matrices, tickDelta);
+            }
+        }
+    }
+
+    public void onSettingUpdate(BooleanValue booleanValue) {
+        for (Object listener : listeners) {
+            if (listener instanceof SettingUpdate) {
+                ((SettingUpdate) listener).onSettingUpdate(booleanValue);
             }
         }
     }

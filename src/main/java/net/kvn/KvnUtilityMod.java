@@ -12,6 +12,7 @@ import net.kvn.settings.*;
 import net.kvn.utils.file.FileReader;
 import net.kvn.utils.file.FileUtil;
 import net.kvn.utils.file.FileWriter;
+import net.kvn.utils.world.BlockPlacer;
 import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +36,14 @@ public class KvnUtilityMod implements ModInitializer {
 	public static final String integerSettings = settingsDir + File.separator + "IntegerSettings.txt";
 	public static final String blockPosSettings = settingsDir + File.separator + "BlockPosSettings.txt";
 	public static final String colorSettings = settingsDir + File.separator + "ColorSettings.txt";
+	public static final String modeSettings = settingsDir + File.separator + "ModeSettings.txt";
+	public static final String blockTypeSettings = settingsDir + File.separator + "BlockTypeSettings.txt";
 
 	public static MinecraftClient mc = MinecraftClient.getInstance();
 	public static CustomEventHandler customEventHandler;
 	public static ModuleManager moduleManager;
 	public static InfoDisplay infoDisplay;
+	public static BlockPlacer blockPlacer;
 	public FabricEvents fabricEvents;
 
 	@Override
@@ -47,6 +51,7 @@ public class KvnUtilityMod implements ModInitializer {
 		customEventHandler = new CustomEventHandler();
 		moduleManager = new ModuleManager();
 		infoDisplay = new InfoDisplay();
+		blockPlacer = new BlockPlacer();
 		fabricEvents = new FabricEvents();
 		customEventHandler.addListener(new ToggleModules());
 		customEventHandler.addListener(MainGui.INSTANCE);
@@ -88,6 +93,8 @@ public class KvnUtilityMod implements ModInitializer {
 		ArrayList<String> integerSettings = FileReader.readLines(KvnUtilityMod.integerSettings);
 		ArrayList<String> blockPosSettings = FileReader.readLines(KvnUtilityMod.blockPosSettings);
 		ArrayList<String> colorSettings = FileReader.readLines(KvnUtilityMod.colorSettings);
+		ArrayList<String> modeSettings = FileReader.readLines(KvnUtilityMod.modeSettings);
+		ArrayList<String> blockTypeSettings = FileReader.readLines(KvnUtilityMod.blockTypeSettings);
 
 		for (Module module : moduleManager.getModules()){
 
@@ -97,6 +104,8 @@ public class KvnUtilityMod implements ModInitializer {
 				if (setting instanceof IntegerValue) integerSettings = ((IntegerValue) setting).loadIntegerFromFile(integerSettings);
 				if (setting instanceof BlockPosValue) blockPosSettings = ((BlockPosValue) setting).loadBlockPosFromFile(blockPosSettings);
 				if (setting instanceof ColorValue) colorSettings = ((ColorValue) setting).loadColorFromFile(colorSettings);
+				if (setting instanceof ModeValue) modeSettings = ((ModeValue) setting).loadModeFromFile(modeSettings);
+				if (setting instanceof BlockTypeValue) ((BlockTypeValue) setting).loadBlockTypeFromFile(blockTypeSettings);
 			}
 		}
 
@@ -104,5 +113,7 @@ public class KvnUtilityMod implements ModInitializer {
 		FileWriter.writeLines(integerSettings, KvnUtilityMod.integerSettings);
 		FileWriter.writeLines(blockPosSettings, KvnUtilityMod.blockPosSettings);
 		FileWriter.writeLines(colorSettings, KvnUtilityMod.colorSettings);
+		FileWriter.writeLines(modeSettings, KvnUtilityMod.modeSettings);
+		FileWriter.writeLines(blockTypeSettings, KvnUtilityMod.blockTypeSettings);
 	}
 }

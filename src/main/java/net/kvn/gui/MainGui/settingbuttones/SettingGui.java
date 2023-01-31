@@ -3,6 +3,7 @@ package net.kvn.gui.MainGui.settingbuttones;
 import net.kvn.gui.MainGui.SettingsGui;
 import net.kvn.modules.Module;
 import net.kvn.settings.*;
+import net.kvn.utils.render.GuiUtil;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -23,6 +24,7 @@ public abstract class SettingGui {
     private Setting setting;
     private SettingsGui settingGui;
     private ArrayList<SettingGui> settingButtons = new ArrayList<>();
+    private ArrayList<SettingGui> modeSettings = new ArrayList<>();
 
     public SettingGui(Module module, Setting setting, int x, int y, int width, int height) {
         this.module = module;
@@ -32,6 +34,7 @@ public abstract class SettingGui {
         this.height = height;
         this.setting = setting;
 
+        /*
         int settingY = y + height;
         for (Setting s : module.getSettingsOf(setting)) {
             SettingGui gui = null;
@@ -41,23 +44,27 @@ public abstract class SettingGui {
             else if (s instanceof IntegerValue) gui = new IntegerValueGui(module, (IntegerValue) s, x, settingY, width, height);
             else if (s instanceof BlockPosValue) gui = new BlockPosGui(module, (BlockPosValue) s, x, settingY, width, height);
             else if (s instanceof ColorValue) gui = new ColorValueGui(module, (ColorValue) s, x, settingY, width, height);
+            else if (s instanceof BlockTypeValue) gui = new BlockTypeValueGui(module, (BlockTypeValue) s, x, settingY, width, height);
 
             if (gui != null) {
                 settingButtons.add(gui);
                 settingY += gui.getTotalHeight();
             }
         }
+
+         */
+        settingButtons.addAll(GuiUtil.getSettingGuis(module, module.getSettingsOf(setting), x, y + height, width, height));
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, int x, int y, float delta) {
         this.x = x;
         this.y = y;
         //draws the background of the button
-        DrawableHelper.fill(matrices, x, y, x + width, y + height, moduleManager.clickGui.backgroundSettings.getColor());
+        DrawableHelper.fill(matrices, x, y, x + width, y + getHeight(), moduleManager.clickGui.backgroundSettings.getColor());
 
         //draws the hierarchy of the setting
         for (int i = getLevelOfSetting(setting); i > 0; i--) {
-            DrawableHelper.fill(matrices, x + (i * 3), y, x + (i * 3) + 1, y + height, moduleManager.clickGui.textSetting.getColor());
+            DrawableHelper.fill(matrices, x + (i * 3), y, x + (i * 3) + 1, y + getHeight(), moduleManager.clickGui.textSetting.getColor());
         }
 
         //shows if the setting has subsettings
@@ -65,6 +72,10 @@ public abstract class SettingGui {
 
         //renders the subsettings if they're opened
         int yVar = y + getHeight();
+        for (SettingGui gui : modeSettings) {
+            gui.render(matrices, mouseX, mouseY, x, yVar, delta);
+            yVar += gui.getTotalHeight();
+        }
         if (setting.isSettingsOpened()){
             for (SettingGui gui : settingButtons) {
                 gui.render(matrices, mouseX, mouseY, x, yVar, delta);
@@ -74,6 +85,9 @@ public abstract class SettingGui {
     }
 
     public void onMouseClick(int button, int x, int y){
+        for (SettingGui gui : modeSettings) {
+            gui.onMouseClick(button, x, y);
+        }
         if (setting.isSettingsOpened()){
             for (SettingGui gui : settingButtons) {
                 gui.onMouseClick(button, x, y);
@@ -84,6 +98,9 @@ public abstract class SettingGui {
         }
     }
     public void onMouseRelease(int button, int x, int y){
+        for (SettingGui gui : modeSettings) {
+            gui.onMouseRelease(button, x, y);
+        }
         if (setting.isSettingsOpened()){
             for (SettingGui gui : settingButtons) {
                 gui.onMouseRelease(button, x, y);
@@ -91,6 +108,9 @@ public abstract class SettingGui {
         }
     }
     public void onMouseScroll(int x, int y, double amount){
+        for (SettingGui gui : modeSettings) {
+            gui.onMouseScroll(x, y, amount);
+        }
         if (setting.isSettingsOpened()){
             for (SettingGui gui : settingButtons) {
                 gui.onMouseScroll(x, y, amount);
@@ -98,6 +118,9 @@ public abstract class SettingGui {
         }
     }
     public void onCharInput(char c) {
+        for (SettingGui gui : modeSettings) {
+            gui.onCharInput(c);
+        }
         if (setting.isSettingsOpened()){
             for (SettingGui gui : settingButtons) {
                 gui.onCharInput(c);
@@ -105,6 +128,9 @@ public abstract class SettingGui {
         }
     }
     public void onKeyPressed(int key) {
+        for (SettingGui gui : modeSettings) {
+            gui.onKeyPressed(key);
+        }
         if (setting.isSettingsOpened()){
             for (SettingGui gui : settingButtons) {
                 gui.onKeyPressed(key);
@@ -139,11 +165,26 @@ public abstract class SettingGui {
 
     public int getTotalHeight() {
         int height = getHeight();
+        for (SettingGui gui : modeSettings) {
+            height += gui.getTotalHeight();
+        }
         if (setting.isSettingsOpened()){
             for (SettingGui gui : settingButtons) {
                 height += gui.getTotalHeight();
             }
         }
         return height;
+    }
+
+    public void setModeSettings(ArrayList<SettingGui> modeSettings) {
+        this.modeSettings = modeSettings;
+    }
+
+    public ArrayList<SettingGui> getModeSettings() {
+        return modeSettings;
+    }
+
+    public ArrayList<SettingGui> getSettingButtons() {
+        return settingButtons;
     }
 }

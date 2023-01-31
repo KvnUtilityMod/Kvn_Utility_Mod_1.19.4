@@ -3,6 +3,7 @@ package net.kvn.gui.MainGui;
 import net.kvn.gui.MainGui.settingbuttones.*;
 import net.kvn.modules.Module;
 import net.kvn.settings.*;
+import net.kvn.utils.render.GuiUtil;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
@@ -28,19 +29,13 @@ public class SettingsGui {
 
         int settingY = y;
         for (Setting s : module.getSettingsNoSettingOf()){
-            SettingGui gui = null;
-            if (s instanceof Visible) gui = new VisibleGui(module, (Visible) s, x, settingY, width, settingHeight);
-            else if (s instanceof KeyValue) gui = new KeyValueGui(module, (KeyValue) s, x, settingY, width, settingHeight);
-            else if (s instanceof BooleanValue) gui = new BooleanGui(module, (BooleanValue) s, x, settingY, width, settingHeight);
-            else if (s instanceof IntegerValue) gui = new IntegerValueGui(module, (IntegerValue) s, x, settingY, width, settingHeight);
-            else if (s instanceof BlockPosValue) gui = new BlockPosGui(module, (BlockPosValue) s, x, settingY, width, settingHeight);
-            else if (s instanceof ColorValue) gui = new ColorValueGui(module, (ColorValue) s, x, settingY, width, settingHeight);
-
+            SettingGui gui = GuiUtil.getSettingGui(module, s, x, settingY, width, settingHeight);
             if (gui != null) {
                 settingButtons.add(gui);
                 settingY += gui.getTotalHeight();
             }
         }
+
         this.y = getCalculatedYPos(y);
     }
 
@@ -51,6 +46,7 @@ public class SettingsGui {
             gui.render(matrices, mouseX, mouseY, x, yVar, delta);
             yVar += gui.getTotalHeight();
         }
+
         totalHeight = yVar - y;
     }
 
@@ -93,6 +89,7 @@ public class SettingsGui {
         for (SettingGui gui : settingButtons) {
             totalHeight += gui.getTotalHeight();
         }
+
         return totalHeight;
     }
 

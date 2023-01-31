@@ -2,14 +2,13 @@ package net.kvn.settings;
 
 import net.kvn.modules.Module;
 
-import java.util.ArrayList;
-
 public abstract class Setting {
 
     private String name;
     private String description;
     private Module module;
     private Setting settingOf;
+    private int modeIndex = -1;
     private boolean settingsOpened = false;
 
     public Setting(String name, String description, Module module, Setting settingOf) {
@@ -53,4 +52,11 @@ public abstract class Setting {
         this.settingsOpened = !this.settingsOpened;
     }
 
+    public void setModeIndex(int modeIndex) {
+        this.modeIndex = modeIndex;
+    }
+
+    public int getModeIndex() {
+        return this.modeIndex;
+    }
 }

@@ -19,7 +19,7 @@ public class BooleanGui extends SettingGui {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, int x, int y, float delta) {
         super.render(matrices, mouseX, mouseY, x, y, delta);
-        mc.textRenderer.draw(matrices, setting.getName(), super.getX() + (super.getWidth() - mc.textRenderer.getWidth(setting.getName())) / 2F, super.getY() + (super.getHeight() - 9) / 2F, setting.getValue() ? moduleManager.clickGui.textSetting.getColor() : 0xFFFFFFFF);
+        mc.textRenderer.draw(matrices, setting.getName(), super.getX() + (super.getWidth() - mc.textRenderer.getWidth(setting.getName())) / 2F, super.getY() + (super.getHeight() - 9) / 2F, setting.isTrue() ? moduleManager.clickGui.textSetting.getColor() : 0xFFFFFFFF);
     }
 
     @Override
