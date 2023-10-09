@@ -38,7 +38,6 @@ public class BooleanValue extends Setting {
     public void updateValue(boolean value) {
         this.setValue(value);
         this.setValueFile(value);
-        customEventHandler.onSettingUpdate(this);
     }
 
     public void toggleValue() {
@@ -71,5 +70,6 @@ public class BooleanValue extends Setting {
 
         //write file
         FileWriter.writeLines(enabledBooleans, booleanSettings);
+        customEventHandler.onSettingUpdate(this);
     }
 }

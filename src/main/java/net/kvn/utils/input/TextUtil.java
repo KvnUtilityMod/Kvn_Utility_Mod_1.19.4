@@ -2,11 +2,20 @@ package net.kvn.utils.input;
 
 import net.kvn.utils.world.BlockUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class TextUtil {
+
+    public static int getInt(String str){
+        try{
+            return Integer.parseInt(str);
+        } catch (Exception e){
+            return 0;
+        }
+    }
 
     public static int getIndex(String str, ArrayList<String> strings){
         for (int i = 0; i < strings.size(); i++) {

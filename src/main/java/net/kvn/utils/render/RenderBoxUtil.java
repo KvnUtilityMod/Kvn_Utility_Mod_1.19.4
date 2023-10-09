@@ -3,8 +3,10 @@ package net.kvn.utils.render;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Matrix4f;
+import org.joml.Matrix4f;
+//import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
@@ -12,6 +14,33 @@ import java.awt.*;
 import static net.kvn.KvnUtilityMod.mc;
 
 public class RenderBoxUtil {
+
+    public static void DrawBoxOutline(MatrixStack stack, BlockPos pos1, BlockPos pos2, double lineWith, Color color) {
+        double xMin = Math.min(pos1.getX(), pos2.getX());
+        double yMin = Math.min(pos1.getY(), pos2.getY());
+        double zMin = Math.min(pos1.getZ(), pos2.getZ());
+        double xMax = Math.max(pos1.getX(), pos2.getX());
+        double yMax = Math.max(pos1.getY(), pos2.getY());
+        double zMax = Math.max(pos1.getZ(), pos2.getZ());
+
+        //4 top lines
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMin, yMax + (1 - lineWith), zMin, xMax + 1, yMax + 1, zMin + lineWith), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMin, yMax + (1 - lineWith), zMin, xMin + lineWith, yMax + 1, zMax + 1), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMin, yMax + (1 - lineWith), zMax + (1 - lineWith), xMax + 1, yMax + 1, zMax + 1), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMax + (1 - lineWith), yMax + (1 - lineWith), zMin, xMax + 1, yMax + 1, zMax + 1), color);
+
+        //4 side lines
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMin, yMin, zMin, xMin + lineWith, yMax + 1, zMin + lineWith), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMin, yMin, zMax + (1 - lineWith), xMin + lineWith, yMax + 1, zMax + 1), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMax + (1 - lineWith), yMin, zMax + (1 - lineWith), xMax + 1, yMax + 1, zMax + 1), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMax + (1 - lineWith), yMin, zMin, xMax + 1, yMax + 1, zMin + lineWith), color);
+
+        //4 bottom lines
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMin, yMin, zMin, xMax + 1, yMin + lineWith, zMin + lineWith), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMin, yMin, zMin, xMin + lineWith, yMin + lineWith, zMax + 1), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMin, yMin, zMax + (1 - lineWith), xMax + 1, yMin + lineWith, zMax + 1), color);
+        RenderBoxUtil.draw3d(stack, BoxUtil.createBox(xMax + (1 - lineWith), yMin, zMin, xMax + 1, yMin + lineWith, zMax + 1), color);
+    }
 
     public static void draw3d(MatrixStack stack, Box box, Color color) {
 
@@ -22,7 +51,7 @@ public class RenderBoxUtil {
         stack.push();
 
         RenderSystem.disableCull();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
         RenderSystem.disableDepthTest();
         RenderSystem.enableBlend();
 

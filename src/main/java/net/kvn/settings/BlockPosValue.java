@@ -7,6 +7,7 @@ import net.kvn.utils.file.FileWriter;
 import java.util.ArrayList;
 
 import static net.kvn.KvnUtilityMod.blockPosSettings;
+import static net.kvn.KvnUtilityMod.customEventHandler;
 import static net.kvn.utils.input.TextUtil.getIndex;
 
 public class BlockPosValue extends Setting {
@@ -68,6 +69,7 @@ public class BlockPosValue extends Setting {
         }
         //write file
         FileWriter.writeLines(blockPos, blockPosSettings);
+        customEventHandler.onSettingUpdate(this);
     }
 
     public net.minecraft.util.math.BlockPos getPos() {
@@ -75,17 +77,17 @@ public class BlockPosValue extends Setting {
     }
 
     public void setPos(net.minecraft.util.math.BlockPos pos) {
-        setBlockPosFile(pos.getX(), pos.getY(), pos.getZ());
         this.x = pos.getX();
         this.y = pos.getY();
         this.z = pos.getZ();
+        setBlockPosFile(pos.getX(), pos.getY(), pos.getZ());
     }
 
     public void setPos(int x, int y, int z) {
-        setBlockPosFile(x, y, z);
         this.x = x;
         this.y = y;
         this.z = z;
+        setBlockPosFile(x, y, z);
     }
 
     public int getX() {
@@ -93,8 +95,8 @@ public class BlockPosValue extends Setting {
     }
 
     public void setX(int x) {
-        setBlockPosFile(x, this.y, this.z);
         this.x = x;
+        setBlockPosFile(x, this.y, this.z);
     }
 
     public int getY() {
@@ -102,8 +104,8 @@ public class BlockPosValue extends Setting {
     }
 
     public void setY(int y) {
-        setBlockPosFile(this.x, y, this.z);
         this.y = y;
+        setBlockPosFile(this.x, y, this.z);
     }
 
     public int getZ() {
@@ -111,7 +113,7 @@ public class BlockPosValue extends Setting {
     }
 
     public void setZ(int z) {
-        setBlockPosFile(this.x, this.y, z);
         this.z = z;
+        setBlockPosFile(this.x, this.y, z);
     }
 }

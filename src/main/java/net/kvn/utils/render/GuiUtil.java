@@ -27,6 +27,7 @@ public class GuiUtil {
         else if (s instanceof ColorValue) return new ColorValueGui(m, (ColorValue) s, x, y, with, height);
         else if (s instanceof ModeValue) return new ModeValueGui(m, (ModeValue) s, x, y, with, height);
         else if (s instanceof BlockTypeValue) return new BlockTypeValueGui(m, (BlockTypeValue) s, x, y, with, height);
+        else if (s instanceof SettingPlaceHolder) return new SettingPlaceHolderGui(m, (SettingPlaceHolder) s, x, y, with, height);
         return null;
     }
     public static ArrayList<SettingGui> getSettingGuis(Module m, ArrayList<Setting> settings, int x, int y, int with, int height) {

@@ -1,5 +1,6 @@
 package net.kvn.utils.math;
 
+import net.kvn.utils.world.Distance;
 import net.minecraft.util.math.BlockPos;
 
 public class DoublePos {
@@ -42,8 +43,29 @@ public class DoublePos {
         return getDistance(pos.getX(), pos.getY(), pos.getZ());
     }
 
+    public void moveCloserTo(DoublePos pos, double distance) {
+        double length = this.getDistance(pos);
+        double x = this.x - pos.getX();
+        double y = this.y - pos.getY();
+        double z = this.z - pos.getZ();
+
+        x /= length;
+        y /= length;
+        z /= length;
+
+        this.x += x * distance;
+        this.y += y * distance;
+        this.z += z * distance;
+    }
+
+    public DoublePos getDoublePosCloserTo(DoublePos pos, double distance) {
+        DoublePos newPos = new DoublePos(this.getX(), this.getY(), this.getZ());
+        newPos.moveCloserTo(pos, distance);
+        return newPos;
+    }
+
     public BlockPos toBlockPos() {
-        return new BlockPos(Math.round(x), Math.round(y), Math.round(z));
+        return new BlockPos((int) Math.round(x), (int) Math.round(y), (int) Math.round(z));
     }
 
     public double[] toArray() {

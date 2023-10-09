@@ -7,6 +7,7 @@ import net.kvn.utils.file.FileWriter;
 
 import java.util.ArrayList;
 
+import static net.kvn.KvnUtilityMod.customEventHandler;
 import static net.kvn.utils.input.TextUtil.getIndex;
 
 public class Visible extends Setting {
@@ -61,5 +62,6 @@ public class Visible extends Setting {
 
         //write file
         FileWriter.writeLines(visibleModules, KvnUtilityMod.visibleModules);
+        customEventHandler.onSettingUpdate(this);
     }
 }

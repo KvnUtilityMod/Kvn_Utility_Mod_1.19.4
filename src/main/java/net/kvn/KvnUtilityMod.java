@@ -27,11 +27,13 @@ public class KvnUtilityMod implements ModInitializer {
 
 	//dir enabled and initialized modules
 	public static final String modulesDir = FileUtil.getKvnFolder() + "Modules";
+	public static final String categoryDir = FileUtil.getKvnFolder() + "Category";
+	public static final String settingsDir = FileUtil.getKvnFolder() + "Settings";
 	public static final String enabledModules = modulesDir + File.separator + "enabledModules.txt";
 	public static final String initializedModules = modulesDir + File.separator + "initializedModules.txt";
 	public static final String visibleModules = modulesDir + File.separator + "visibleModules.txt";
 	public static final String moduleKeys = modulesDir + File.separator + "moduleKeys.txt";
-	public static final String settingsDir = FileUtil.getKvnFolder() + "Settings";
+	public static final String categoryPositions = categoryDir + File.separator + "positions.txt";
 	public static final String booleanSettings = settingsDir + File.separator + "BooleanSettings.txt";
 	public static final String integerSettings = settingsDir + File.separator + "IntegerSettings.txt";
 	public static final String blockPosSettings = settingsDir + File.separator + "BlockPosSettings.txt";
@@ -65,6 +67,7 @@ public class KvnUtilityMod implements ModInitializer {
 		FileUtil.createDir(FileUtil.getKvnFolderWithoutSeparator());
 		FileUtil.createDir(settingsDir);
 		FileUtil.createDir(modulesDir);
+		FileUtil.createDir(categoryDir);
 	}
 
 	private void activateModules(){

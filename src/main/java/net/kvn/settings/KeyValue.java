@@ -6,6 +6,7 @@ import net.kvn.utils.file.FileWriter;
 
 import java.util.ArrayList;
 
+import static net.kvn.KvnUtilityMod.customEventHandler;
 import static net.kvn.KvnUtilityMod.moduleKeys;
 import static net.kvn.utils.input.TextUtil.getIndex;
 
@@ -56,6 +57,7 @@ public class KeyValue extends Setting {
         keySettings.set(getIndex(this.saveString, keySettings), this.saveString + this.key);
         //write file
         FileWriter.writeLines(keySettings, moduleKeys);
+        customEventHandler.onSettingUpdate(this);
     }
 
 }

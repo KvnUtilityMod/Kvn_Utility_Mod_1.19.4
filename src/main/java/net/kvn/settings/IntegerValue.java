@@ -6,6 +6,7 @@ import net.kvn.utils.file.FileWriter;
 
 import java.util.ArrayList;
 
+import static net.kvn.KvnUtilityMod.customEventHandler;
 import static net.kvn.KvnUtilityMod.integerSettings;
 import static net.kvn.utils.input.TextUtil.getIndex;
 
@@ -73,6 +74,7 @@ public class IntegerValue extends Setting {
         }
         //write file
         FileWriter.writeLines(integerValues, integerSettings);
+        customEventHandler.onSettingUpdate(this);
     }
 
     public int getMin() {

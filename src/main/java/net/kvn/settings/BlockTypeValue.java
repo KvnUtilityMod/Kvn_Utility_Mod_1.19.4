@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import java.util.ArrayList;
 
 import static net.kvn.KvnUtilityMod.blockTypeSettings;
+import static net.kvn.KvnUtilityMod.customEventHandler;
 import static net.kvn.utils.input.TextUtil.getIndex;
 
 public class BlockTypeValue extends Setting {
@@ -68,5 +69,6 @@ public class BlockTypeValue extends Setting {
         }
         //write file
         FileWriter.writeLines(blockTypeValues, blockTypeSettings);
+        customEventHandler.onSettingUpdate(this);
     }
 }

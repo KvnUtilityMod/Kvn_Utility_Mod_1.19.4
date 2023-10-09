@@ -32,6 +32,12 @@ public class WorldUtil {
         getServerWorld().setBlockState(pos, state);
     }
 
+    public static void setBlockIfNeeded(BlockPos pos, BlockState state) {
+        if (getBlockState(pos).getBlock() != state.getBlock()) {
+            setBlock(pos, state);
+        }
+    }
+
     public static BlockState getBlockState(BlockPos pos) {
         return mc.world.getBlockState(pos);
     }

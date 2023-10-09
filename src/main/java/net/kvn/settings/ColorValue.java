@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import static net.kvn.KvnUtilityMod.colorSettings;
+import static net.kvn.KvnUtilityMod.customEventHandler;
 import static net.kvn.utils.input.TextUtil.getIndex;
 
 public class ColorValue extends Setting {
@@ -138,6 +139,7 @@ public class ColorValue extends Setting {
             colorSettingStrings.set(index, saveString + " = [" + mode + ", " + alpha + ", " + rainBowSpeed + ", " + rainBowSaturation + ", " + rainBowBrightness + ", " + red + ", " + green + ", " + blue + ", " + hueDegrees + ", " + hueSaturation + ", " + hueBrightness + "]");
         }
         FileWriter.writeLines(colorSettingStrings, colorSettings);
+        customEventHandler.onSettingUpdate(this);
     }
 
     public void setValue(int button, int value){
