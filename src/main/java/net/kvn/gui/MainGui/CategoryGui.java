@@ -2,14 +2,14 @@ package net.kvn.gui.MainGui;
 
 import net.kvn.modules.Category;
 import net.kvn.modules.Module;
+import net.kvn.utils.file.FileKeyValue;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-import static net.kvn.KvnUtilityMod.mc;
-import static net.kvn.KvnUtilityMod.moduleManager;
+import static net.kvn.KvnUtilityMod.*;
 
 public class CategoryGui {
 
@@ -61,7 +61,36 @@ public class CategoryGui {
 
     public void onMouseRelease(int button, int x, int y) {}
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void updatePosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+
+        //update modules position
+        int yVar = y + categoryHeight;
+        for (ModuleGui m : moduleGuis) {
+            m.updatePosition(x, yVar);
+            yVar += moduleHeight;
+        }
+    }
+
+    public void savePosition() {
+        FileKeyValue.saveValue("category_" + category.getName() + "_x", String.valueOf(x), categoryPositions);
+        FileKeyValue.saveValue("category_" + category.getName() + "_y", String.valueOf(y), categoryPositions);
+    }
+
     public MainGui getMainGui() {
         return mainGui;
+    }
+
+    public boolean isMouseOverHeader(int mouseX, int mouseY) {
+        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + categoryHeight;
     }
 }

@@ -75,12 +75,12 @@ public abstract class Module {
     public void onEnable() {
         this.active = true;
         this.setIsEnabledFile(true);
-        System.out.println("onEnable() called for " + this.name + "!");
+//        System.out.println("onEnable() called for " + this.name + "!");
     }
     public void onDisable() {
         this.active = false;
         setIsEnabledFile(false);
-        System.out.println("onDisable() called for " + this.name + "!");
+//        System.out.println("onDisable() called for " + this.name + "!");
     }
 
     public int getKey() {

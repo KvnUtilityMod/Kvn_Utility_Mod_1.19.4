@@ -27,7 +27,7 @@ public class Line extends Module implements RenderBox, SettingUpdate {
     public ModeValue precisionMode = addSetting(new ModeValue("Render mode", "determine how the circle is rendered", this, new String[]{"Precision", "On Block"}, 0));
     public ColorValue color = addSetting(new ColorValue("Color", "The color of the line", this));
     public BlockTypeValue blockType = addSetting(new BlockTypeValue("BlockType", "The type of block to be placed", this, "stone"));
-    public BooleanValue paste = addSetting(new BooleanValue("Paste", "Pastes the line when activated", this, true));
+    public BooleanValue paste = addSetting(new BooleanValue("Paste", "Pastes the line when activated", this, false));
 
     public Line() {
         super("Line", "Draws a line when activated", Category.SHAPES);

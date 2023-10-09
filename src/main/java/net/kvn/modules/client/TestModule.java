@@ -9,7 +9,12 @@ import net.kvn.utils.world.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.state.property.Properties;
+import net.minecraft.state.property.Property;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import static net.kvn.KvnUtilityMod.mc;
@@ -23,6 +28,8 @@ public class TestModule extends Module implements MouseClick {
     public BooleanValue testBoolean4 = addSetting(new BooleanValue("TestBoolean4", "testBoolean4", this, true));
     public ColorValue testColor = addSetting(new ColorValue("TestColor", "testColor", this, testMode));
     public IntegerValue testInteger = addSetting(new IntegerValue("TestInteger", "testInteger", this, testMode, 0, 0, 10));
+    public SettingPlaceHolder testPlaceHolder = addSetting(new SettingPlaceHolder("TestPlaceHolder", "testPlaceHolder", this));
+    public SettingPlaceHolder testPlaceHolder2 = addSetting(new SettingPlaceHolder("TestPlaceHolder2", "testPlaceHolder2", this, testPlaceHolder));
     public BlockTypeValue testBlockType = addSetting(new BlockTypeValue("TestBlockType", "testBlockType", this, testMode, "stone"));
 
     public TestModule() {
@@ -35,12 +42,8 @@ public class TestModule extends Module implements MouseClick {
     @Override
     public void onEnable() {
         super.onEnable();
-        System.out.println("TestModule enabled!");
 
-        //List<Module> modules = List.of(moduleManager.testModule, moduleManager.);
-
-        //BlockUtil.printWorlds();
-
+        /*
         System.out.println(WorldUtil.getServerWorld().getRegistryKey().getValue());
 
         World world = mc.world;
@@ -61,7 +64,7 @@ public class TestModule extends Module implements MouseClick {
         BlockState blockState = block.getDefaultState();
         //world.setBlockState(blockPos, blockState);
 
-
+         */
         /*
         Iterator<Block> var0 = Registry.BLOCK.iterator();
         var0.forEachRemaining(block1 -> {

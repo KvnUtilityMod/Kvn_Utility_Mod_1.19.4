@@ -6,8 +6,8 @@ import net.kvn.event.events.SettingUpdate;
 import net.kvn.modules.Category;
 import net.kvn.modules.Module;
 import net.kvn.settings.*;
+import net.kvn.utils.math.ArchUtil;
 import net.kvn.utils.math.DoublePos;
-import net.kvn.utils.math.rotation.Projection;
 import net.kvn.utils.render.BoxUtil;
 import net.kvn.utils.render.RenderBoxUtil;
 import net.kvn.utils.world.BlockPasteAction;
@@ -43,7 +43,7 @@ public class Arch extends Module implements RenderBox, SettingUpdate {
         RenderBoxUtil.draw3d(matrices, BoxUtil.createBox(pos3.getPos()), color.getDarkerColor(20));
 
         //render the arch
-        for (DoublePos pos : getArchBlocks()) {
+        for (DoublePos pos : ArchUtil.getArchBlocks(new DoublePos(pos1.getPos()), new DoublePos(pos2.getPos()), new DoublePos(pos3.getPos()), blockAmount.getValue())) {
             if (blockMode.getMode() == 0) {
                 RenderBoxUtil.draw3d(matrices, BoxUtil.createBox(pos), color.getColorObj());
             } else {
@@ -56,49 +56,42 @@ public class Arch extends Module implements RenderBox, SettingUpdate {
     public void onSettingUpdate(Setting setting) {
         if (setting == pasteCircle) {
             if (pasteCircle.isTrue()) {
-                ArrayList<DoublePos> blocks = getArchBlocks();
+                ArrayList<DoublePos> blocks = ArchUtil.getArchBlocks(new DoublePos(pos1.getPos()), new DoublePos(pos2.getPos()), new DoublePos(pos3.getPos()), blockAmount.getValue());
                 blockPlacer.paste(new BlockPasteAction(blockToPaste.getBlockType2().getDefaultState(), blocks));
                 pasteCircle.updateValue(false);
             }
         }
     }
 
+    /*
     public ArrayList<DoublePos> getArchBlocks() {
-        ArrayList<DoublePos> positions2D = new ArrayList<>();
+
         ArrayList<DoublePos> result = new ArrayList<>();
 
-        //get the right projection
+        // Get the right projection
         Projection projection = Projection.getProjection(pos1.getPos(), pos3.getPos(), pos2.getPos());
         DoublePos projPos1 = projection.project(new DoublePos(pos1.getPos()));
         DoublePos projPos2 = projection.project(new DoublePos(pos2.getPos()));
         DoublePos projPos3 = projection.project(new DoublePos(pos3.getPos()));
-        double radius = Math.abs(projPos3.getX()) / 2;
-        double height = projPos2.getY();
 
-        RenderBoxUtil.draw3d(new MatrixStack(), BoxUtil.createBox(projPos1.toBlockPos()), color.getColorObj());
-        RenderBoxUtil.draw3d(new MatrixStack(), BoxUtil.createBox(projPos2.toBlockPos()), color.getColorObj());
-        RenderBoxUtil.draw3d(new MatrixStack(), BoxUtil.createBox(projPos3.toBlockPos()), color.getColorObj());
+        double startAngle = 0;
+        double endAngle = 359;
+        double heightMultiplier = (projPos2.getY() + 0.000001) / projPos3.getX();
+        double angleStep = (endAngle - startAngle) / blockAmount.getValue();
 
-        //get the 2d positions
-        for (int i = 0; i < blockAmount.getValue(); i++) {
-            double angle = (i * Math.PI) / blockAmount.getValue();
-            double x = radius * Math.cos(angle) + radius;
-            double y = radius * Math.sin(angle) * (height / (radius + 0.000000001));
-            //System.out.println("radius: " + radius + " height: " + height + " x: " + x + " y: " + y);
-            //System.out.println("x: " + x + " y: " + y);
-            positions2D.add(new DoublePos(x, y, 0));
-        }
-
-        //render the 2d positions to debug
-        result.addAll(positions2D);
-
-        //get the 3d positions
-        for (DoublePos pos : positions2D) {
-            result.add(projection.projectBack(pos));
+        for (double angle = startAngle; angle <= endAngle; angle += angleStep) {
+            double x = angle / 360 * Math.abs(projPos3.getX() - projPos1.getX());
+            double y = archHeight(Math.abs(projPos3.getX() - projPos1.getX()), Math.toRadians(angle)) * heightMultiplier;
+            result.add(projection.projectBack(new DoublePos(x, y, 0)));
         }
 
         return result;
     }
 
+     */
 
+    public static double archHeight(double r, double a) {
+        double x = r + r * Math.sin(a/2);
+        return x - r;
+    }
 }

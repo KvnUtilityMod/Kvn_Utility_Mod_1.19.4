@@ -4,7 +4,8 @@ public enum Category {
     BUILD("Build"),
     CLIENT("Client"),
     QUICKWORLDEDIT("QuickWorldEdit"),
-    SHAPES("Shapes");
+    SHAPES("Shapes"),
+    STRUCTURES("Structures");
 
     private String name;
 

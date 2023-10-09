@@ -44,4 +44,10 @@ public class ModuleGui {
             else module.toggle();
         }
     }
+
+    //update position
+    public void updatePosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }

@@ -3,6 +3,7 @@ package net.kvn.event;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.kvn.event.events.*;
 import net.kvn.settings.BooleanValue;
+import net.kvn.settings.Setting;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
@@ -80,10 +81,10 @@ public class CustomEventHandler {
         }
     }
 
-    public void onSettingUpdate(BooleanValue booleanValue) {
+    public void onSettingUpdate(Setting setting) {
         for (Object listener : listeners) {
             if (listener instanceof SettingUpdate) {
-                ((SettingUpdate) listener).onSettingUpdate(booleanValue);
+                ((SettingUpdate) listener).onSettingUpdate(setting);
             }
         }
     }

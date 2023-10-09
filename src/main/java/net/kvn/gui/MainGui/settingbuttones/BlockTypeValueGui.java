@@ -34,12 +34,12 @@ public class BlockTypeValueGui extends SettingGui {
         super.render(matrixStack, mouseX, mouseY, x, y, delta);
         String str = isListening ? "[ " + input + " ]" : "Block: " + setting.getBlockType();
         if (input.length() > 0) str += " tab:" + bestMatch;
-
+        //Ik ben hier geweest
         mc.textRenderer.draw(matrixStack, str, super.getX() + (super.getWidth() - mc.textRenderer.getWidth(str)) / 2F, super.getY() + (super.getHeight() - 9) / 2F, moduleManager.clickGui.textSetting.getColor());
     }
 
     @Override
-    public void onMouseClick(int button, int x, int y) {
+    public void onMouseClick(int button, int x, int y)  {
         super.onMouseClick(button, x, y);
         if (button == 0 && x > super.getX() && x < super.getX() + super.getWidth() && y > super.getY() && y < super.getY() + super.getHeight()) {
             isListening = !isListening;

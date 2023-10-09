@@ -2,18 +2,26 @@ package net.kvn.gui.MainGui;
 
 import net.kvn.event.events.*;
 import net.kvn.modules.Category;
+import net.kvn.utils.file.FileKeyValue;
+import net.kvn.utils.input.TextUtil;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 
+import static net.kvn.KvnUtilityMod.categoryPositions;
 import static net.kvn.KvnUtilityMod.mc;
 
 public class MainGui extends Screen implements CharInput, KeyPress, MouseClick, MouseRelease, MouseScroll {
 
     int mouseX = 0;
     int mouseY = 0;
+    int lastClickedX = 0;
+    int lastClickedY = 0;
+    int selectedCategoryX = 0;
+    int selectedCategoryY = 0;
+    CategoryGui selectedCategory; //CategoryGui which is being moved
     public SettingsGui settingsGui;
     public static MainGui INSTANCE = new MainGui();
     public ArrayList<CategoryGui> categories = new ArrayList<>();
@@ -22,10 +30,10 @@ public class MainGui extends Screen implements CharInput, KeyPress, MouseClick, 
         super(Text.literal(""));
 
         //create category guis for each category
-        int x = 130;
         for (Category c : Category.values()) {
-            categories.add(new CategoryGui(this, c, x, 40, 110, 20, 18));
-            x += 125;
+            int categoryX = TextUtil.getInt(FileKeyValue.getValue("category_" + c.getName() + "_x", categoryPositions));
+            int categoryY = TextUtil.getInt(FileKeyValue.getValue("category_" + c.getName() + "_y", categoryPositions));
+            categories.add(new CategoryGui(this, c, categoryX, categoryY, 110, 20, 18));
         }
     }
 
@@ -35,6 +43,13 @@ public class MainGui extends Screen implements CharInput, KeyPress, MouseClick, 
         this.mouseY = mouseY;
         renderLogo(matrices);
 
+        if (selectedCategory != null) {
+            selectedCategory.updatePosition(
+                    selectedCategoryX + (mouseX - lastClickedX),
+                    selectedCategoryY + (mouseY - lastClickedY)
+            );
+        }
+
         categories.forEach(c -> c.render(matrices, mouseX, mouseY, delta));
         if (settingsGui != null) settingsGui.render(matrices, mouseX, mouseY, delta);
 
@@ -43,6 +58,20 @@ public class MainGui extends Screen implements CharInput, KeyPress, MouseClick, 
     @Override
     public void onMouseClick(int button, int x, int y) {
         if (!(mc.currentScreen instanceof MainGui)) return;
+
+        //update last clicked coordinates
+        lastClickedX = mouseX;
+        lastClickedY = mouseY;
+
+        //check if a category header was clicked
+        for (CategoryGui c : categories) {
+            if (c.isMouseOverHeader(mouseX, mouseY)) {
+                selectedCategory = c;
+                selectedCategoryX = c.getX();
+                selectedCategoryY = c.getY();
+                return;
+            }
+        }
 
         //x and y do are not inline with the render coordinates
         if (settingsGui != null) {
@@ -72,6 +101,12 @@ public class MainGui extends Screen implements CharInput, KeyPress, MouseClick, 
     @Override
     public void onMouseRelease(int button, int x, int y) {
         if (!(mc.currentScreen instanceof MainGui)) return;
+
+        if (selectedCategory != null) {
+            selectedCategory.savePosition();
+            selectedCategory = null;
+        }
+
         if (settingsGui != null) settingsGui.onMouseRelease(button, mouseX, mouseY);
     }
 
