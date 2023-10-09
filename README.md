@@ -33,5 +33,6 @@
 ## Structures
 - **CountBlocks:** Counts the number of blocks in a structure
 
-Discord:
-https://discord.gg/5THJJaqkJJ
+
+## Discord server:
+- https://discord.gg/5THJJaqkJJ
