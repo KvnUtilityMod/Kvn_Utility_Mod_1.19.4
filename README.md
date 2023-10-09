@@ -1,15 +1,17 @@
 # Kvn_Utility_Mod_1.19.2
 
-## Build
-- **Ruler:** Measures the distance between blocks
-- **Miror:** Mirors blocks over a line
+## Features
 
-## Client
+### Build
+- **Ruler:** Measures the distance between blocks
+- **Miror:** Mirrors blocks over a line
+
+### Client
 - **ClickGui:** clickGui
 - **FillMyPos:** FillMyPos
 - **QuickCrafting:** Quickly craft items
 
-## QuickWorldEdit
+### QuickWorldEdit
 - **SetPos1:** Sets the position1 to your current position when activated
 - **SetPos2:** Sets the position1 to your current position when activated
 - **Copy:** Copies the selected area when activated
@@ -22,7 +24,7 @@
 - **Redo:** Redoes the last action
 - **Undo:** Undoes the last action
 
-## Shapes
+### Shapes
 - **Line:** Draws a line when activated
 - **Arch:** arch
 - **Circle:** circle
@@ -30,7 +32,7 @@
 - **Undo:** undo
 - **Redo:** redo
 
-## Structures
+### Structures
 - **CountBlocks:** Counts the number of blocks in a structure
 
 
