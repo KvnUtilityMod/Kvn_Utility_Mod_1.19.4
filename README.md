@@ -1,5 +1,7 @@
 # Kvn_Utility_Mod_1.19.2
 
+- *The goal of Kvn Utility Mod is to assist the player with buiding in creative by for example drawing circles even in 3d and measuring distances between points etc*
+
 ## Features
 
 ### Build
@@ -36,5 +38,5 @@
 - **CountBlocks:** Counts the number of blocks in a structure
 
 
-## Discord server:
+## Discord server (with quick install guide):
 - https://discord.gg/5THJJaqkJJ
